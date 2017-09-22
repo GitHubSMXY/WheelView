@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.wx.wheelview"
+        applicationId "com.smxy.wheelview"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
@@ -22,5 +22,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.2.0'
-    compile project(':wheelview')
+//    compile project(':wheelview')
+    compile 'com.github.GitHubSMXY:WheelView:v1.0.0'
 }
