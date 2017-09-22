@@ -88,13 +88,11 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
         public void handleMessage(Message msg) {
             if (msg.what == WheelConstants.WHEEL_SCROLL_HANDLER_WHAT) {
                 if (mOnWheelItemSelectedListener != null) {
-                    mOnWheelItemSelectedListener.onItemSelected
-                            (getCurrentPosition(), getSelectionItem());
+                    mOnWheelItemSelectedListener.onItemSelected(getCurrentPosition(), getSelectionItem());
                 }
                 if (mJoinWheelView != null) {
                     if (!mJoinMap.isEmpty()) {
-                        mJoinWheelView.resetDataFromTop(mJoinMap.get(mList.get
-                                (getCurrentPosition()))
+                        mJoinWheelView.resetDataFromTop(mJoinMap.get(mList.get(getCurrentPosition()))
                         );
                     } else {
                         throw new WheelViewException("JoinList is error.");
@@ -133,20 +131,17 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
                     }
                     if (Math.abs(deltaY) < mItemH / 2) {
                         int d = getSmoothDistance(deltaY);
-                        smoothScrollBy(d, WheelConstants
-                                .WHEEL_SMOOTH_SCROLL_DURATION);
+                        smoothScrollBy(d, WheelConstants.WHEEL_SMOOTH_SCROLL_DURATION);
                     } else {
                         int d = getSmoothDistance(mItemH + deltaY);
-                        smoothScrollBy(d, WheelConstants
-                                .WHEEL_SMOOTH_SCROLL_DURATION);
+                        smoothScrollBy(d, WheelConstants.WHEEL_SMOOTH_SCROLL_DURATION);
                     }
                 }
             }
         }
 
         @Override
-        public void onScroll(AbsListView view, int firstVisibleItem, int
-                visibleItemCount, int totalItemCount) {
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             if (visibleItemCount != 0) {
                 refreshCurrentPosition(false);
             }
@@ -179,8 +174,7 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
      *
      * @param onWheelItemSelectedListener
      */
-    public void setOnWheelItemSelectedListener(OnWheelItemSelectedListener<T>
-                                                       onWheelItemSelectedListener) {
+    public void setOnWheelItemSelectedListener(OnWheelItemSelectedListener<T> onWheelItemSelectedListener) {
         mOnWheelItemSelectedListener = onWheelItemSelectedListener;
     }
 
@@ -377,16 +371,21 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
      */
     @Override
     public void setSelection(final int selection) {
+//        mSelection = selection;
+//        setVisibility(View.INVISIBLE);
+//        WheelView.this.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                WheelView.super.setSelection(getRealPosition(selection));
+//                refreshCurrentPosition(false);
+//                setVisibility(View.VISIBLE);
+//            }
+//        }, 500);
+
+
         mSelection = selection;
-        setVisibility(View.INVISIBLE);
-        WheelView.this.postDelayed(new Runnable() {
-            @Override
-            public void run() {
                 WheelView.super.setSelection(getRealPosition(selection));
                 refreshCurrentPosition(false);
-                setVisibility(View.VISIBLE);
-            }
-        }, 500);
     }
 
     /**
@@ -477,6 +476,10 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
         super.setAdapter(adapter);
         mWheelAdapter = adapter;
         mWheelAdapter.setData(mList).setWheelSize(mWheelSize).setLoop(mLoop).setClickable(mClickable);
+    }
+
+    public BaseWheelAdapter<T> getWheelAdapter() {
+        return mWheelAdapter;
     }
 
     /**
@@ -610,16 +613,14 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
     private void refreshTextView(int position, int curPosition, View
             itemView, TextView textView) {
         if (curPosition == position) { // 选中
-            int textColor = mStyle.selectedTextColor != -1 ? mStyle
-                    .selectedTextColor : (mStyle.textColor != -1 ? mStyle
-                    .textColor : WheelConstants.WHEEL_TEXT_COLOR);
+            int textColor = mStyle.selectedTextColor;
             float defTextSize = mStyle.textSize != -1 ? mStyle.textSize : WheelConstants.WHEEL_TEXT_SIZE;
             float textSize = mStyle.selectedTextSize != -1 ? mStyle
                     .selectedTextSize : (mStyle.selectedTextZoom != -1 ? (defTextSize * mStyle.selectedTextZoom) :
                     defTextSize);
             setTextView(itemView, textView, textColor, textSize, 1.0f);
         } else {    // 未选中
-            int textColor = mStyle.textColor != -1 ? mStyle.textColor :
+            int textColor = mStyle.textColor != WheelConstants.WHEEL_TEXT_COLOR ? mStyle.textColor :
                     WheelConstants.WHEEL_TEXT_COLOR;
             float textSize = mStyle.textSize != -1 ? mStyle.textSize :
                     WheelConstants.WHEEL_TEXT_SIZE;
@@ -649,8 +650,7 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
         if (!TextUtils.isEmpty(mExtraText)) {
-            Rect targetRect = new Rect(0, mItemH * (mWheelSize / 2), getWidth
-                    (), mItemH * (mWheelSize / 2 + 1));
+            Rect targetRect = new Rect(0, mItemH * (mWheelSize / 2), getWidth(), mItemH * (mWheelSize / 2 + 1));
             mTextPaint.setTextSize(mExtraTextSize);
             mTextPaint.setColor(mExtraTextColor);
             Paint.FontMetricsInt fontMetrics = mTextPaint.getFontMetricsInt();
@@ -679,8 +679,8 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
         public int backgroundColor = -1; // 背景颜色
         public int holoBorderColor = -1;   // holo样式边框颜色
         public int holoBorderWidth = -1;//holo样式边框宽度
-        public int textColor = -1; // 文本颜色
-        public int selectedTextColor = -1; // 选中文本颜色
+        public int textColor = Color.BLACK; // 文本颜色
+        public int selectedTextColor = Color.BLACK; // 选中文本颜色
         public int textSize = -1;// 文本大小
         public int selectedTextSize = -1;   // 选中文本大小
         public float textAlpha = -1;  // 文本透明度(0f ~ 1f)

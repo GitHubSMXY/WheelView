@@ -19,6 +19,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wx.wheelview.common.WheelConstants;
 import com.wx.wheelview.widget.WheelItem;
 
 /**
@@ -29,16 +30,25 @@ import com.wx.wheelview.widget.WheelItem;
 public class ArrayWheelAdapter<T> extends BaseWheelAdapter<T> {
 
     private Context mContext;
+    private int itemHeight = WheelConstants.WHEEL_ITEM_HEIGHT;
+    private int itemPanding = WheelConstants.WHEEL_ITEM_PADDING;
 
     public ArrayWheelAdapter(Context context) {
+        mContext = context;
+    }
+
+    public ArrayWheelAdapter(Context context, int itemHeight,int panding) {
+        this.itemHeight = itemHeight;
+        this.itemPanding = panding;
         mContext = context;
     }
 
     @Override
     public View bindView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = new WheelItem(mContext);
+            convertView = new WheelItem(mContext,itemHeight,itemPanding);
         }
+
         WheelItem wheelItem = (WheelItem) convertView;
         T item = getItem(position);
         if (wheelItem instanceof CharSequence) {

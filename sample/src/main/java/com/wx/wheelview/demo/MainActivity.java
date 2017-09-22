@@ -58,12 +58,12 @@ public class MainActivity extends Activity {
      */
     private void initWheel1() {
         mainWheelView = (WheelView) findViewById(R.id.main_wheelview);
-        mainWheelView.setWheelAdapter(new ArrayWheelAdapter(this));
+        mainWheelView.setWheelAdapter(new ArrayWheelAdapter(this,80,0));
         mainWheelView.setSkin(WheelView.Skin.Holo);
         mainWheelView.setWheelData(createMainDatas());
         WheelView.WheelViewStyle style = new WheelView.WheelViewStyle();
-        style.selectedTextSize = 20;
-        style.textSize = 16;
+        style.selectedTextSize = 70;
+        style.textSize = 70;
         mainWheelView.setStyle(style);
 
         subWheelView = (WheelView) findViewById(R.id.sub_wheelview);

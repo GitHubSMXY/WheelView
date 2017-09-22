@@ -35,12 +35,21 @@ import com.wx.wheelview.util.WheelUtils;
  * @author venshine
  */
 public class WheelItem extends FrameLayout {
-
     private ImageView mImage;
     private TextView mText;
 
+    private int itemHeight = WheelConstants.WHEEL_ITEM_HEIGHT;
+    private int itemPadding = WheelConstants.WHEEL_ITEM_PADDING;
+
+
     public WheelItem(Context context) {
         super(context);
+        init();
+    }
+    public WheelItem(Context context,int itemHeight,int itemPadding) {
+        super(context);
+        this.itemHeight = itemHeight;
+        this.itemPadding = itemPadding;
         init();
     }
 
@@ -59,12 +68,9 @@ public class WheelItem extends FrameLayout {
      */
     private void init() {
         LinearLayout layout = new LinearLayout(getContext());
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, WheelUtils.dip2px(getContext(),
-                WheelConstants
-                        .WHEEL_ITEM_HEIGHT));
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, WheelUtils.dip2px(getContext(),this.itemHeight));
         layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.setPadding(WheelConstants.WHEEL_ITEM_PADDING, WheelConstants.WHEEL_ITEM_PADDING, WheelConstants
-                .WHEEL_ITEM_PADDING, WheelConstants.WHEEL_ITEM_PADDING);
+        layout.setPadding(this.itemPadding, this.itemPadding, this.itemPadding, this.itemPadding);
         layout.setGravity(Gravity.CENTER);
         addView(layout, layoutParams);
 
